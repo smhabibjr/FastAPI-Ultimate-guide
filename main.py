@@ -2,6 +2,6 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get('/')
+@app.get('/new')
 def index():
-    return 'hello world'
+    return {'msg': 'hello world'}
