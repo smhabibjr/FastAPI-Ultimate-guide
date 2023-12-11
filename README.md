@@ -1,3 +1,5 @@
+### Setup and run python venv
+
 1. make a folder for example : 
 
 ```
@@ -34,3 +36,15 @@ source fastapi-venv/bin/active
 
 uvicorn main:app --reload
 ```
+
+### Get method overview
+
+1. path parameters
+```python
+@app.get('/blog/{id}')
+def index(id):
+    return f'This is blog with id {id}'
+```
+2. Predefined values
+3. Query parameters
+
