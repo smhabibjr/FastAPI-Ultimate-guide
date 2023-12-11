@@ -46,5 +46,21 @@ def index(id):
     return f'This is blog with id {id}'
 ```
 2. Predefined values
+Predefined values with Enum
+```python
+class BlogType(str, Enum):
+    short = 'short'
+    story = 'story'
+    howto = 'howto'
+
+@app.get('/blog/type/{type}')
+def get_blog_type(type: BlogType):
+    return f'blog type is {type}'
+```
 3. Query parameters
+```python
+@app.get('/blog/all')
+def get_all_blog(page = 1, page_size = 100):
+    return f'All blog from {page} and {page_size} rovided!'
+```
 
