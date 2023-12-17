@@ -1,4 +1,10 @@
-### Setup and run python venv
+## Table of Contents
+
+- [Setup and run python venv](#setup-and-run-python-venv)
+- [Get method overview](#get-method-overview)
+- [Operation description](#operation-description)
+
+## Setup and run python venv
 
 1. make a folder for example : 
 
@@ -37,7 +43,7 @@ source fastapi-venv/bin/active
 uvicorn main:app --reload
 ```
 
-### Get method overview
+## Get method overview
 
 1. path parameters
 ```python
@@ -68,5 +74,41 @@ def get_all_blog(page = 1, page_size = 100):
 @app.get('/blog/{id}/comments/{comment_id}')
 def get_blog_with_comments_id(id: int, comment_id: int, valid: bool = True, username: Optional[str] = None):
     return f'Blog id {id}, comment id {comment_id}, valid { valid}, username {username}'
+```
+## Operation description
+
+http Status code.
+We can send back status code if something not found.
+```python
+@app.get('/book/{id}', status_code=status.HTTP_404_NOT_FOUND)
+def get_book(id: int):
+    if id > 7:
+        return f'Book is not found!'
+    else:
+        return f'Book id is {id}'
+```
+We can also change the status code on the response.
+```python
+@app.get('/book/{id}', status_code=status.HTTP_200_OK)
+def get_book(id: int, response: Response):
+    if id > 7:
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return f'Book is not found!'
+    else:
+        response.status_code = status.HTTP_200_OK
+        return f'Book id is {id}'
+```
+We can use tags to categorize our operations, summary , description, response_description
+```python
+@app.get('/blog/all', tags=['blog'])
+
+@app.get('/book/{id}', status_code=status.HTTP_200_OK, tags=['Books'])
+
+@app.get('/book/{id}', status_code=status.HTTP_200_OK,
+         tags=['Books'],
+         summary='This is our single book route',
+         description='This route responsible for fetch book and update book',
+         response_description='Response to get book'
+        )
 ```
 
