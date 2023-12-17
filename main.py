@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import FastAPI
 from enum import Enum
 
@@ -32,5 +33,6 @@ def get_blog_type(type: BlogType):
 def blog(id: int):
     return f'This is blog with id {id}'
 
-
-
+@app.get('/blog/{id}/comments/{comment_id}')
+def get_blog_with_comments_id(id: int, comment_id: int, valid: bool = True, username: Optional[str] = None):
+    return f'Blog id {id}, comment id {comment_id}, valid { valid}, username {username}'

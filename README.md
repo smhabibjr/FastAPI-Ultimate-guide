@@ -63,4 +63,10 @@ def get_blog_type(type: BlogType):
 def get_all_blog(page = 1, page_size = 100):
     return f'All blog from {page} and {page_size} rovided!'
 ```
+4. Path and Query parameters
+```python
+@app.get('/blog/{id}/comments/{comment_id}')
+def get_blog_with_comments_id(id: int, comment_id: int, valid: bool = True, username: Optional[str] = None):
+    return f'Blog id {id}, comment id {comment_id}, valid { valid}, username {username}'
+```
 
