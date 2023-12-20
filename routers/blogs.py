@@ -2,6 +2,8 @@ from typing import Optional
 from fastapi import APIRouter, Response, status
 from enum import Enum
 
+from pydantic import BaseModel
+
 blog_routers = APIRouter(
     prefix='/blog',
     tags=['blog']
@@ -11,6 +13,17 @@ blog_routers = APIRouter(
 @blog_routers.get('/all')
 def get_all_blog(page = 1, page_size = 100):
     return f'All blog from {page} and {page_size} provided!'
+
+class BlogPost(BaseModel):
+    title: str
+    content: str
+    published: Optional[bool]   
+
+@blog_routers.post('/new')
+def create_blog(item : BlogPost):
+    # Logic to create the blog
+    return { 'message': f'Blog has been successfully created', 'item': item }
+
 
 """ Predefined values """
 class BlogType(str, Enum):

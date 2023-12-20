@@ -1,3 +1,4 @@
+import json
 from fastapi import FastAPI
 from routers import blogs
 from routers import books
@@ -8,4 +9,4 @@ app.include_router(books.router)
 
 @app.get('/')
 def index1():
-    return 'hi htere 3'
+    return 'hi there 3'
