@@ -3,6 +3,7 @@
 - [Setup and run python venv](#setup-and-run-python-venv)
 - [Get method overview](#get-method-overview)
 - [Operation description](#operation-description)
+- [Routers](#routers)
 
 ## Setup and run python venv
 
@@ -111,4 +112,23 @@ We can use tags to categorize our operations, summary , description, response_de
          response_description='Response to get book'
         )
 ```
+## Routers
+Using routers we can separate operations into multiple files.
 
+```python
+// routers/blogs.py
+blog_routers = APIRouter(
+    prefix='/blog',
+    tags=['blog']
+)
+
+""" Query parameters with Default values """
+@blog_routers.get('/all')
+def get_all_blog(page = 1, page_size = 100):
+    return f'All blog from {page} and {page_size} provided!'
+
+// main.py
+app = FastAPI()
+app.include_router(blogs.blog_routers)
+
+```
