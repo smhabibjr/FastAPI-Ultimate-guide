@@ -1,5 +1,43 @@
 ## Parameters
 
 - [Request Body](#request-body)
+- [Path and query parameters](#path-and-query-parameters)
 
 ## Request Body
+
+Data Validation, Data Conversion, JSON schema
+
+Request body done by post method. Fast API give us also data data validation as well.
+
+```python
+class BlogPost(BaseModel):
+    title: str
+    content: str
+    author: str
+    published: Optional[bool]   
+
+@blog_routers.post('/new')
+def create_blog(blog : BlogPost):
+    print(blog.title)
+    return {'data': blog}
+```
+now if you give title as a int then you will get an error (Unprocessable Entity).
+
+## Path and query parameters
+
+combine all 3 types of data in a single path.
+
+```python
+@blog_routers.post('/new/{id}')
+def create_blog(blog : BlogPost, id: int = 1111, version: int = 1.0):
+    print(blog.title)
+    return {'id': id, 'version':version, 'data': blog}
+```
+## Parameter metadata
+
+we can also add metadata for each parameter. For example : Title , description, alias, deprecation status of parameters using Query.
+
+
+
+
+

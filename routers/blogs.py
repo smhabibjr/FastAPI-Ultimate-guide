@@ -1,5 +1,6 @@
+from curses import version
 from typing import Optional
-from fastapi import APIRouter, Response, status
+from fastapi import APIRouter, Query
 from enum import Enum
 
 from pydantic import BaseModel
@@ -17,13 +18,24 @@ def get_all_blog(page = 1, page_size = 100):
 class BlogPost(BaseModel):
     title: str
     content: str
+    author: str
     published: Optional[bool]   
 
-@blog_routers.post('/new')
-def create_blog(item : BlogPost):
-    # Logic to create the blog
-    return { 'message': f'Blog has been successfully created', 'item': item }
+@blog_routers.post('/new/{id}')
+def create_blog(blog : BlogPost, id: int = 1111, version: int = 1.0):
+    print(blog.title)
+    return {'id': id, 'version':version, 'data': blog}
 
+@blog_routers.post('/new/{id}/comments')
+def create_blog_with_comments(
+    blog : BlogPost, 
+    id: int,
+    comments_id: int = Query(None,
+                    title='Blog id',
+                    description='This is blog id',
+                    alias='blog-id')):
+
+    return {'id': id, 'data': blog}
 
 """ Predefined values """
 class BlogType(str, Enum):
